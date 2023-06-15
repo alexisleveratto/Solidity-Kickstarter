@@ -4,6 +4,8 @@ import { Button, Card } from 'semantic-ui-react'
 import factory from '../ethereum/factory';
 import Layout from '../components/Layout';
 
+import { Link } from '../routes';
+
 // 1. Configure Web3 with a provider from MetaMask
 // 2. Tell Web3 that a deployed copy of 'CampaignFactory' exists
 // 3. Use Factory instance to retrieve a list of deployed campaigns
@@ -20,7 +22,13 @@ class CampaignIndex extends Component {
         const items = this.props.campaigns.map(address => {
             return {
                 header: address,
-                description: <a>View Campaign</a>,
+                description: (
+                    <Link route={`/campaigns/${address}`}>
+                        <a>
+                            View Campaign
+                        </a>
+                    </Link>
+                ),
                 fluid: true
             };
         });
@@ -33,12 +41,16 @@ class CampaignIndex extends Component {
             <div>
                 <h3>Open Campaigns</h3>
                 
-                <Button 
-                    floated='right'
-                    content="Create Campaign"
-                    icon="add circle"
-                    primary
-                />
+                <Link route="/campaigns/new">
+                    <a>
+                        <Button 
+                            floated='right'
+                            content="Create Campaign"
+                            icon="add circle"
+                            primary
+                        />
+                    </a>
+                </Link>
 
                 { this.renderCampaigns() }
             </div>
